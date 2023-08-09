@@ -14,7 +14,6 @@ import Signup from "../Pages/Signup/Signup";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
     element: <HomeLayout />,
     children: [
       {
@@ -40,7 +39,6 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/Adminlayout",
     element: <AdminLayout />,
     children: [
       {
