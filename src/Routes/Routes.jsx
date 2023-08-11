@@ -11,6 +11,7 @@ import Orders from "../Pages/Admin/Orders";
 import PriceAndInventory from "../Pages/Admin/Price&Inventory";
 import Products from "../Pages/Admin/products";
 import Signup from "../Pages/Signup/Signup";
+import Cart from "../Pages/Client/Cart";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "/categorypage",
         element: <CategoryPage />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/productpage",
