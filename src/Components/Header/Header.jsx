@@ -56,7 +56,6 @@ function Header() {
             <i className=" text-xl bi bi-layers-fill"></i>
           </div>
           <div className="flex gap-2 justify-center items-center p-1 hover:border-b-2 hover:border-b-green-950">
-            <Link to="/"></Link>
             <button>
               <Link to="/">خانه</Link>
             </button>
