@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "/Orders",
+        path: "/admin/Orders",
         element: <Orders />,
       },
       {

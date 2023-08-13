@@ -1,3 +1,11 @@
+@font-face {
+  font-family: nazanin;
+  src: url("../src/assets/font/BNazanin.ttf");
+}
+* {
+  font-family: nazanin;
+  font-size: 18px;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -17,7 +17,7 @@ function Footer() {
           <li>نحوه ثبت سفارش</li>
         </ul>
       </div>
-      <div className="border-t-2 border-t-white flex justify-between p-3 mt-20">
+      <div className="border-t border-t-white flex justify-between p-3 mt-20">
         <p> طراحی و اجرا : زهرا آذرباد</p>
         <p>تمامی حقوق مادی و معنوی متعلق به تیسا استور می باشد</p>
       </div>
