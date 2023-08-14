@@ -35,7 +35,7 @@ function Header() {
         </div>
         <img src="./src/assets/img/tisa1.png" />
       </div>
-      <div className="border-b border-orange-500 hover:border-none px-5 py-1 text-green-900">
+      <div className=" px-5 py-1 text-green-900">
         <div className="flex justify-end gap-7">
           <div className="flex gap-2 justify-center items-center p-1 hover:border-b-2 hover:border-b-green-950">
             <button>تماس با ما</button>

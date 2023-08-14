@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: nazanin;
   src: url("../src/assets/font/BNazanin.ttf");
@@ -5,7 +9,18 @@
 * {
   font-family: nazanin;
   font-size: 18px;
+  text-align: right;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-track:hover {
+  background: #555;
+}
