@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 const Login = () => {
   return (
-    <div className="flex gap-5 text-cyan-700 ">
-      <div>login</div>
-      <Link to="/Orders">go to Orders</Link>
-      <Link to="/priceandinventory">go to Price & Inventory</Link>
-      <Link to="/products">go to Products</Link>
-      <Link to="/">go back Home</Link>
+    <div className="w-screen h-screen flex items-center justify-end bg-login-bg ">
+      <div className=" w-1/3 max-[376px]:w-2/3 max-[376px]:mx-2 mx-40 flex flex-col items-center justify-center bg-green-500 ">
+        <label>name</label>
+        <input type="text" />
+        <input type="text" />
+        <button>enter</button>
+      </div>
     </div>
   );
 };

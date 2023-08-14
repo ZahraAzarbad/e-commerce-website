@@ -9,7 +9,12 @@ import Shipping from "../Pages/Client/Shipping";
 import AdminLayout from "../Layouts/AdminLayout";
 import Orders from "../Pages/Admin/Orders";
 import PriceAndInventory from "../Pages/Admin/Price&Inventory";
-import Products from "../Pages/Admin/products";
+import Products from "../Pages/Admin/Products";
+import Bar from "../Pages/Admin/Bar";
+import Line from "../Pages/Admin/Line";
+import Pie from "../Pages/Admin/Pie";
+import FAQ from "../Pages/Admin/FAQ";
+import Calendar from "../Pages/Admin/Calendar";
 import Signup from "../Pages/Signup/Signup";
 import Cart from "../Pages/Client/Cart";
 
@@ -57,6 +62,26 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/Bar",
+        element: <Bar />,
+      },
+      {
+        path: "/Line",
+        element: <Line />,
+      },
+      {
+        path: "/Pie",
+        element: <Pie />,
+      },
+      {
+        path: "/FAQ",
+        element: <FAQ />,
+      },
+      {
+        path: "/Calendar",
+        element: <Calendar />,
       },
     ],
   },
