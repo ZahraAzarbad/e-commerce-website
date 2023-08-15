@@ -18,15 +18,12 @@ const AdminLayout = () => {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
-          <main className="content">
+        <div className="flex justify-between">
+          <main className="w-full h-full">
             <AdminHeader />
-            <div className="flex">
-              <Outlet />
-              <Sidebar />
-            </div>
-            <div>footer</div>
+            <Outlet />
           </main>
+          <Sidebar />
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

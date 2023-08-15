@@ -17,6 +17,7 @@ import FAQ from "../Pages/Admin/FAQ";
 import Calendar from "../Pages/Admin/Calendar";
 import Signup from "../Pages/Signup/Signup";
 import Cart from "../Pages/Client/Cart";
+import Dashboard from "../Pages/Admin/Scenes/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
         path: "/Bar",
