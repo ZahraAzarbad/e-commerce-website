@@ -1,4 +1,3 @@
-// import React from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -33,7 +32,9 @@ function Header() {
           />
           <i className="bi bi-search"></i>
         </div>
-        <img src="./src/assets/img/tisa1.png" />
+        <Link to="/">
+          <img src="./src/assets/img/tisa1.png" />
+        </Link>
       </div>
       <div className=" px-5 py-1 text-green-900">
         <div className="flex justify-end gap-7">
