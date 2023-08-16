@@ -70,12 +70,12 @@ const InProgressOrders = () => {
     <Box m="20px">
       <Title title="سفارشات" subtitle="بررسی و ویرایش اطلاعات سفارشات" />
 
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center text-white">
         <button className="bg-slate-700 px-10 py-3 rounded-l-md">
           سفارشات در حال انجام
         </button>
         <Link to="/orders/deliverd">
-          <button className="bg-slate-800 text-slate-700 px-10 py-3 rounded-r-md">
+          <button className="bg-slate-800 text-slate-600 px-10 py-3 rounded-r-md">
             سفارشات تحویل داده شده
           </button>
         </Link>
