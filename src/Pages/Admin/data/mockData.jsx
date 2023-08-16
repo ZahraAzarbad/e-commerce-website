@@ -1,4 +1,195 @@
 import { tokens } from "../../../utils/Theme";
+export const products = [
+  {
+    id: 1,
+    name: "خط چشم یانگمی",
+    category: "آرایشی",
+    price: 85000,
+    inventory: 200,
+    brand: "یانگمی",
+  },
+  {
+    id: 2,
+    name: "رژ لب مک",
+    category: "آرایشی",
+    price: 150000,
+    inventory: 40,
+    brand: "مک",
+  },
+  {
+    id: 3,
+    name: "سایه چشم مک",
+    category: "آرایشی",
+    price: 250000,
+    inventory: 70,
+    brand: "مک",
+  },
+  {
+    id: 4,
+    name: "ماسک ورقه ای صورت",
+    category: "بهداشتی صورت",
+    price: 15000,
+    inventory: 2000,
+    brand: "ایمیجز",
+  },
+  {
+    id: 5,
+    name: "ماسک کاسه ای سالیسیلیک اسید ",
+    category: "مراقبتی",
+    price: 185000,
+    inventory: 100,
+    brand: "بیواکوا",
+  },
+  {
+    id: 6,
+    name: "بادی اسپلش ویکتوریا",
+    category: "بهداشتی بدن",
+    price: 1485000,
+    inventory: 150,
+    brand: "ویکتوریا سکرت",
+  },
+  {
+    id: 7,
+    name: "میسلار ژل سیمپل",
+    category: "مراقبتی",
+    price: 358000,
+    inventory: 400,
+    brand: "سیمپل",
+  },
+  {
+    id: 8,
+    name: "تونر صورت سیمپل",
+    category: "بهداشتی صورت",
+    price: 210000,
+    inventory: 200,
+    brand: "سیمپل",
+  },
+  {
+    id: 9,
+    name: "تینت لب شراب",
+    category: "آرایشی",
+    price: 85000,
+    inventory: 200,
+    brand: "اتودهاوس",
+  },
+  {
+    id: 10,
+    name: "ماسک ورقه ای صورت طلا",
+    category: "بهداشتی صورت",
+    price: 25000,
+    inventory: 1200,
+    brand: "ایمیجز",
+  },
+  {
+    id: 11,
+    name: "فوم شستشو صورت بیودرما",
+    category: "آرایشی",
+    price: 185000,
+    inventory: 100,
+    brand: "بیودرما",
+  },
+];
+
+export const deliveredOrders = [
+  {
+    id: 1,
+    name: "داوود ویا",
+    totalPrice: 15630,
+    date: "1402-5-17",
+  },
+  {
+    id: 2,
+    name: "آقام پپ گواردیولا",
+    totalPrice: 25630,
+    date: "1402-2-23",
+  },
+  {
+    id: 3,
+    name: "داوشم ژاوی هرناندز",
+    totalPrice: 7630,
+    date: "1402-1-13",
+  },
+  {
+    id: 4,
+    name: "عقاب اسپانیاایکر کاسیاس",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 5,
+    name: "اسپانیاایکر کاسیاس",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 6,
+    name: "آریا استارک پلنگ وینترفل",
+    totalPrice: 508630,
+    date: "1401-11-8",
+  },
+  {
+    id: 7,
+    name: "لوکی از ازگارد",
+    totalPrice: 8630,
+    date: "1402-6-13",
+  },
+  {
+    id: 8,
+    name: "تونی استارک نابغه میلیاردر",
+    totalPrice: 8000000630,
+    date: "1402-6-19",
+  },
+];
+export const inProgressOrders = [
+  {
+    id: 1,
+    name: "جان اسنو بدبخت دو عالم",
+    totalPrice: 15630,
+    date: "1402-5-17",
+  },
+  {
+    id: 2,
+    name: " هرماینی گرنجر ",
+    totalPrice: 25630,
+    date: "1402-2-23",
+  },
+  {
+    id: 3,
+    name: "چیهیرو سلطان قلب ها",
+    totalPrice: 7630,
+    date: "1402-1-13",
+  },
+  {
+    id: 4,
+    name: "کریستوفر نولان",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 5,
+    name: "جیسون استتهام ",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 6,
+    name: "بندیکت شرلوک برتر",
+    totalPrice: 508630,
+    date: "1401-11-8",
+  },
+  {
+    id: 7,
+    name: "هیو وولورین دلها",
+    totalPrice: 8630,
+    date: "1402-6-13",
+  },
+  {
+    id: 8,
+    name: "زن قوی دو بونگ سون",
+    totalPrice: 8000000630,
+    date: "1402-6-19",
+  },
+];
 
 export const mockDataTeam = [
   {
