@@ -19,65 +19,106 @@
 //   );
 // };
 // export default Orders;
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar, faIR } from "@mui/x-data-grid";
 import { tokens } from "../../utils/Theme";
-import { mockDataContacts } from "./data/mockData";
+import { products } from "./data/mockData";
 import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
+
+const handleClick = (event, cellValues) => {
+  console.log(cellValues.row);
+};
+
+const handleCellClick = (param, event) => {
+  event.stopPropagation();
+};
+
+const handleRowClick = (param, event) => {
+  event.stopPropagation();
+};
+
+const columns = [
+  {
+    field: "حذف",
+    renderCell: (cellValues) => {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(event) => {
+            handleClick(event, cellValues);
+          }}
+        >
+          حذف
+        </Button>
+      );
+    },
+    align: "center",
+    headerAlign: "center",
+    flex: 0.5,
+  },
+  {
+    field: "ویرایش",
+    renderCell: (cellValues) => {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(event) => {
+            handleClick(event, cellValues);
+          }}
+        >
+          ویرایش
+        </Button>
+      );
+    },
+    align: "center",
+    headerAlign: "center",
+    flex: 0.5,
+  },
+  {
+    field: "brand",
+    headerName: "برند ",
+    flex: 1,
+    cellClassName: "brand-column--cell",
+    align: "right",
+    headerAlign: "right",
+  },
+  {
+    field: "category",
+    headerName: "دسته بندی",
+    flex: 1,
+    cellClassName: "category-column--cell",
+    align: "right",
+    headerAlign: "right",
+  },
+  {
+    field: "name",
+    headerName: "نام",
+    flex: 1,
+    cellClassName: "name-column--cell",
+    align: "right",
+    headerAlign: "right",
+  },
+  {
+    field: "id",
+    headerName: "شمارنده",
+    flex: 0.5,
+    align: "right",
+    headerAlign: "right",
+  },
+];
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
-  ];
-
   return (
-    <Box m="20px">
+    <Box p="15px">
       <Title
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="محصولات"
+        subtitle="لیست تمامی محصولات به همراه قابلیت ویرایش و حذف آنها"
       />
       <Box
         m="40px 0 0 0"
@@ -116,10 +157,12 @@ const Products = () => {
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           pageSizeOptions={[5, 10, 25]}
-          rows={mockDataContacts}
+          rows={products}
           columns={columns}
           localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
           components={{ Toolbar: GridToolbar }}
+          onCellClick={handleCellClick}
+          onRowClick={handleRowClick}
         />
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar, faIR } from "@mui/x-data-grid";
 import { tokens } from "../../utils/Theme";
-import { inProgressOrders } from "./data/mockData";
+import { deliveredOrders } from "./data/mockData";
 import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -62,7 +62,7 @@ const columns = [
   },
 ];
 
-const InProgressOrders = () => {
+const DeliveredOrders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -71,16 +71,16 @@ const InProgressOrders = () => {
       <Title title="سفارشات" subtitle="بررسی و ویرایش اطلاعات سفارشات" />
 
       <div className="flex justify-center items-center">
-        <button className="bg-slate-700 px-10 py-3 rounded-l-md">
-          سفارشات در حال انجام
-        </button>
-        <Link to="/orders/deliverd">
-          <button className="bg-slate-800 text-slate-700 px-10 py-3 rounded-r-md">
-            سفارشات تحویل داده شده
+        <Link to="/orders/inprogress">
+          <button className="bg-slate-800 text-slate-700 px-10 py-3 rounded-l-md">
+            سفارشات در حال انجام
           </button>
         </Link>
-      </div>
 
+        <button className="bg-slate-700 px-10 py-3 rounded-r-md">
+          سفارشات تحویل داده شده
+        </button>
+      </div>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -118,7 +118,7 @@ const InProgressOrders = () => {
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           pageSizeOptions={[5, 10, 25]}
-          rows={inProgressOrders}
+          rows={deliveredOrders}
           columns={columns}
           localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
           components={{ Toolbar: GridToolbar }}
@@ -130,4 +130,4 @@ const InProgressOrders = () => {
   );
 };
 
-export default InProgressOrders;
+export default DeliveredOrders;
