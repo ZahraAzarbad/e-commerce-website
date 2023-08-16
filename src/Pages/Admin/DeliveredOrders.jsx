@@ -70,9 +70,9 @@ const DeliveredOrders = () => {
     <Box m="20px">
       <Title title="سفارشات" subtitle="بررسی و ویرایش اطلاعات سفارشات" />
 
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center text-white">
         <Link to="/orders/inprogress">
-          <button className="bg-slate-800 text-slate-700 px-10 py-3 rounded-l-md">
+          <button className="bg-slate-800 text-slate-600 px-10 py-3 rounded-l-md">
             سفارشات در حال انجام
           </button>
         </Link>

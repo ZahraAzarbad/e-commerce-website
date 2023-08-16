@@ -1,114 +1,6 @@
-// // import { Link } from "react-router-dom";
-// // const Login = () => {
-// //   return (
-// //     <div className="w-screen h-screen flex items-center justify-end bg-login-bg ">
-// //       <div className=" w-1/3 max-[376px]:w-2/3 max-[376px]:mx-2 mx-40 flex flex-col items-center justify-center bg-green-500 ">
-// //         <label>name</label>
-// //         <input type="text" />
-// //         <input type="text" />
-// //         <button>enter</button>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-// // export default Login;
-// import { Box, Button, TextField } from "@mui/material";
-// import { Formik } from "formik";
-// import * as yup from "yup";
-// import useMediaQuery from "@mui/material/useMediaQuery";
-
-// const Login = () => {
-//   const isNonMobile = useMediaQuery("(min-width:600px)");
-
-//   const handleFormSubmit = (values) => {
-//     console.log(values);
-//   };
-
-//   return (
-//     <div className="h-screen flex items-center justify-end bg-login-bg md:mx-28 mx-5">
-//       <Box m="20px" width="400px">
-//         <Formik
-//           onSubmit={handleFormSubmit}
-//           initialValues={initialValues}
-//           validationSchema={checkoutSchema}
-//         >
-//           {({
-//             values,
-//             errors,
-//             touched,
-//             handleBlur,
-//             handleChange,
-//             handleSubmit,
-//           }) => (
-//             <form onSubmit={handleSubmit}>
-//               <Box
-//                 display="grid"
-//                 gap="30px"
-//                 gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-//                 sx={{
-//                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-//                 }}
-//               >
-//                 <TextField
-//                   fullWidth
-//                   variant="filled"
-//                   type="text"
-//                   label="نام کاربری"
-//                   onBlur={handleBlur}
-//                   onChange={handleChange}
-//                   value={values.email}
-//                   name="username"
-//                   error={!!touched.email && !!errors.email}
-//                   helperText={touched.email && errors.email}
-//                   sx={{ gridColumn: "span 4" }}
-//                 />
-//                 <TextField
-//                   fullWidth
-//                   variant="filled"
-//                   type="text"
-//                   label="رمز"
-//                   onBlur={handleBlur}
-//                   onChange={handleChange}
-//                   value={values.contact}
-//                   name="password"
-//                   error={!!touched.contact && !!errors.contact}
-//                   helperText={touched.contact && errors.contact}
-//                   sx={{ gridColumn: "span 4" }}
-//                 />
-//               </Box>
-//               <Box display="flex" justifyContent="center" mt="20px">
-//                 <Button type="submit" color="secondary" variant="contained">
-//                   ورود
-//                 </Button>
-//               </Box>
-//             </form>
-//           )}
-//         </Formik>
-//       </Box>
-//     </div>
-//   );
-// };
-
-// const phoneRegExp =
-//   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-// const checkoutSchema = yup.object().shape({
-//   username: yup
-//     .string()
-//     .email("نام کاربری معتبر نیست")
-//     .required("نام کاربری نمی تواند خالی باشد"),
-//   password: yup
-//     .string()
-//     .matches(phoneRegExp, "رمز اشتباه است")
-//     .required("رمز نمی تواند خالی باشد"),
-// });
-// const initialValues = {
-//   username: "",
-//   password: "",
-// };
-
-// export default Login;
-
+// helperText={
+//   <ErrorMessage className="text-red" name="password" />
+// }
 import {
   Grid,
   Paper,
@@ -116,51 +8,92 @@ import {
   Button,
   Typography,
   Avatar,
+  useTheme,
 } from "@material-ui/core";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const Login = ({ handleChange }) => {
+  const navigate = useNavigate();
+
   const paperStyle = {
     padding: "40px 20px",
     height: "520px",
     width: 350,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "start",
     flexDirection: "column",
-    gap: "8px",
   };
-  const remember = {
+  const form = {
+    width: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "column",
+    gap: "20px",
   };
   const avatarStyle = {
     height: "150px",
     width: "150px",
   };
   const btnstyle = { margin: "8px 0" };
+
   const initialValues = {
     username: "",
     password: "",
-    remember: false,
   };
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("نام کاربری الزامی است"),
-    password: Yup.string().required("رمز الزامی است"),
+    username: Yup.string()
+      .oneOf([Yup.ref("username")], "no match")
+      .required("نام کاربری الزامی است"),
+    password: Yup.string()
+      .min(6, "رمز باید حداقل دارای 6 کاراکتر باشد")
+      .required("رمز الزامی است"),
   });
   const onSubmit = (values, props) => {
-    console.log(values);
-    setTimeout(() => {
-      props.resetForm();
-      props.setSubmitting(false);
-    }, 2000);
+    if (values.username !== "admin" && values.password !== "admin1234") {
+      setTimeout(() => {
+        props.resetForm();
+        props.setSubmitting(false);
+      }, 20);
+      toast.error("نام کاربری یا رمز عبور اشتباه است");
+    }
+    axios
+      .post("http://localhost:8000/api/auth/login", values)
+      .then((response) => {
+        console.log(response);
+        if (
+          response.status === 200 &&
+          response.data.data.user.role === "ADMIN"
+        ) {
+          const token = response.data.token;
+          Cookies.set("accessToken", token.accessToken);
+          Cookies.set("refreshToken", token.refreshToken);
+          navigate("/orders/inprogress");
+        }
+      });
   };
   return (
-    <div className="h-screen flex items-center justify-center md:justify-end md:mx-28 mx-5 bg-login-bg">
+    <div className="h-screen flex items-center justify-center bg-login-bg relative">
+      <div className="absolute top-3 left-3 bg-orange-600 text-white rounded-md">
+        <Button
+          sx={{
+            fontSize: "14px",
+            padding: "5px 15px",
+          }}
+        >
+          <ArrowBackIcon sx={{ mr: "10px" }} />
+          <Link to="/">بازگشت به سایت</Link>
+        </Button>
+      </div>
+
       <Grid>
         <Paper style={paperStyle}>
           <Grid align="center">
@@ -183,7 +116,7 @@ const Login = ({ handleChange }) => {
             validationSchema={validationSchema}
           >
             {(props) => (
-              <Form dir="rtl">
+              <Form style={form} dir="rtl">
                 <Field
                   as={TextField}
                   label="نام کاربری"
@@ -191,8 +124,18 @@ const Login = ({ handleChange }) => {
                   placeholder="نام کاربری را وارد کنید "
                   fullWidth
                   required
-                  helperText={<ErrorMessage name="username" />}
+                  error={
+                    props.touched.username && props.errors.username
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    props.touched.username && props.errors.username
+                      ? props.errors.username
+                      : ""
+                  }
                 />
+
                 <Field
                   as={TextField}
                   label="رمز"
@@ -201,35 +144,32 @@ const Login = ({ handleChange }) => {
                   type="password"
                   fullWidth
                   required
-                  helperText={<ErrorMessage name="password" />}
+                  error={
+                    props.touched.password && props.errors.password
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    props.touched.password && props.errors.password
+                      ? props.errors.password
+                      : ""
+                  }
                 />
-                <Field
-                  style={remember}
-                  as={FormControlLabel}
-                  name="remember"
-                  control={<Checkbox color="primary" />}
-                  label="مرا به خاطر داشته باش"
-                />
-                <Link to="/Orders/inprogress">
-                  <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    disabled={props.isSubmitting}
-                    style={btnstyle}
-                    fullWidth
-                  >
-                    {props.isSubmitting ? "Loading" : "ورود"}
-                  </Button>
-                </Link>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  style={btnstyle}
+                  fullWidth
+                >
+                  {props.isSubmitting ? "درحال بررسی" : "ورود"}
+                </Button>
               </Form>
             )}
           </Formik>
-          <Typography>
-            <a href="#">رمز عبور را فراموش کردید؟</a>
-          </Typography>
         </Paper>
       </Grid>
+      <ToastContainer />
     </div>
   );
 };
