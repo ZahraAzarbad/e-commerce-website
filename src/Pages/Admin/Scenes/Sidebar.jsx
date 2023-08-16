@@ -134,7 +134,7 @@ const SidebarMenu = () => {
             />
             <Item
               title="سفارشات"
-              to="/admin/Orders"
+              to="/Orders/inprogress"
               icon={<ShoppingCartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

@@ -1,5 +1,4 @@
 import { tokens } from "../../../utils/Theme";
-
 export const products = [
   {
     id: 1,
@@ -88,6 +87,182 @@ export const products = [
     price: 185000,
     inventory: 100,
     brand: "بیودرما",
+  },
+];
+
+export const deliveredOrders = [
+  {
+    id: 1,
+    name: "داوود ویا",
+    totalPrice: 15630,
+    date: "1402-5-17",
+  },
+  {
+    id: 2,
+    name: "آقام پپ گواردیولا",
+    totalPrice: 25630,
+    date: "1402-2-23",
+  },
+  {
+    id: 3,
+    name: "داوشم ژاوی هرناندز",
+    totalPrice: 7630,
+    date: "1402-1-13",
+  },
+  {
+    id: 4,
+    name: "عقاب اسپانیاایکر کاسیاس",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 5,
+    name: "اسپانیاایکر کاسیاس",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 6,
+    name: "آریا استارک پلنگ وینترفل",
+    totalPrice: 508630,
+    date: "1401-11-8",
+  },
+  {
+    id: 7,
+    name: "لوکی از ازگارد",
+    totalPrice: 8630,
+    date: "1402-6-13",
+  },
+  {
+    id: 8,
+    name: "تونی استارک نابغه میلیاردر",
+    totalPrice: 8000000630,
+    date: "1402-6-19",
+  },
+];
+export const inProgressOrders = [
+  {
+    id: 1,
+    name: "جان اسنو بدبخت دو عالم",
+    totalPrice: 15630,
+    date: "1402-5-17",
+  },
+  {
+    id: 2,
+    name: " هرماینی گرنجر ",
+    totalPrice: 25630,
+    date: "1402-2-23",
+  },
+  {
+    id: 3,
+    name: "چیهیرو سلطان قلب ها",
+    totalPrice: 7630,
+    date: "1402-1-13",
+  },
+  {
+    id: 4,
+    name: "کریستوفر نولان",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 5,
+    name: "جیسون استتهام ",
+    totalPrice: 10630,
+    date: "1402-4-8",
+  },
+  {
+    id: 6,
+    name: "بندیکت شرلوک برتر",
+    totalPrice: 508630,
+    date: "1401-11-8",
+  },
+  {
+    id: 7,
+    name: "هیو وولورین دلها",
+    totalPrice: 8630,
+    date: "1402-6-13",
+  },
+  {
+    id: 8,
+    name: "زن قوی دو بونگ سون",
+    totalPrice: 8000000630,
+    date: "1402-6-19",
+  },
+];
+
+export const mockDataTeam = [
+  {
+    id: 1,
+    name: "Jon Snow",
+    email: "jonsnow@gmail.com",
+    age: 35,
+    phone: "(665)121-5454",
+    access: "admin",
+  },
+  {
+    id: 2,
+    name: "Cersei Lannister",
+    email: "cerseilannister@gmail.com",
+    age: 42,
+    phone: "(421)314-2288",
+    access: "manager",
+  },
+  {
+    id: 3,
+    name: "Jaime Lannister",
+    email: "jaimelannister@gmail.com",
+    age: 45,
+    phone: "(422)982-6739",
+    access: "user",
+  },
+  {
+    id: 4,
+    name: "Anya Stark",
+    email: "anyastark@gmail.com",
+    age: 16,
+    phone: "(921)425-6742",
+    access: "admin",
+  },
+  {
+    id: 5,
+    name: "Daenerys Targaryen",
+    email: "daenerystargaryen@gmail.com",
+    age: 31,
+    phone: "(421)445-1189",
+    access: "user",
+  },
+  {
+    id: 6,
+    name: "Ever Melisandre",
+    email: "evermelisandre@gmail.com",
+    age: 150,
+    phone: "(232)545-6483",
+    access: "manager",
+  },
+  {
+    id: 7,
+    name: "Ferrara Clifford",
+    email: "ferraraclifford@gmail.com",
+    age: 44,
+    phone: "(543)124-0123",
+    access: "user",
+  },
+  {
+    id: 8,
+    name: "Rossini Frances",
+    email: "rossinifrances@gmail.com",
+    age: 36,
+    phone: "(222)444-5555",
+    access: "user",
+  },
+  {
+    id: 9,
+    name: "Harvey Roxie",
+    email: "harveyroxie@gmail.com",
+    age: 65,
+    phone: "(444)555-6239",
+    access: "admin",
   },
 ];
 

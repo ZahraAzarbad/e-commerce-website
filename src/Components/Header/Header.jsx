@@ -7,7 +7,7 @@ function Header() {
         <div className="flex gap-3">
           <div className="flex gap-2 justify-center items-center p-1 rounded-md">
             <button>
-              <Link to="/admin/Orders">ورود به مدیریت</Link>
+              <Link to="/orders/inprogress">ورود به مدیریت</Link>
             </button>
 
             <i className=" text-xl bi bi-person-check-fill"></i>

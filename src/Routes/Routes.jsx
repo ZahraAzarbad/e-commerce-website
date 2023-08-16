@@ -7,7 +7,8 @@ import ProductPage from "../Pages/Client/ProductPage";
 import ResultOfPay from "../Pages/Client/ResultOfPay";
 import Shipping from "../Pages/Client/Shipping";
 import AdminLayout from "../Layouts/AdminLayout";
-import Orders from "../Pages/Admin/Orders";
+import DeliveredOrders from "../Pages/Admin/DeliveredOrders";
+import InProgressOrders from "../Pages/Admin/InProgressOrders";
 import PriceAndInventory from "../Pages/Admin/Price&Inventory";
 import Products from "../Pages/Admin/Products";
 import Bar from "../Pages/Admin/Bar";
@@ -53,8 +54,12 @@ export const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin/Orders",
-        element: <Orders />,
+        path: "/orders/deliverd",
+        element: <DeliveredOrders />,
+      },
+      {
+        path: "/orders/inprogress",
+        element: <InProgressOrders />,
       },
       {
         path: "/priceandinventory",
@@ -69,15 +74,15 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/Bar",
+        path: "/bar",
         element: <Bar />,
       },
       {
-        path: "/Line",
+        path: "/line",
         element: <Line />,
       },
       {
-        path: "/Pie",
+        path: "/pie",
         element: <Pie />,
       },
       {
@@ -85,13 +90,13 @@ export const router = createBrowserRouter([
         element: <FAQ />,
       },
       {
-        path: "/Calendar",
+        path: "/calendar",
         element: <Calendar />,
       },
     ],
   },
   {
-    path: "/Login",
+    path: "/login",
     element: <Login />,
   },
   {
