@@ -4,9 +4,12 @@ const HomePage = () => {
     <>
       <div className="text-3xl">Home</div>
       <div className="flex gap-5 text-cyan-700 ">
-        <Link to="/productpage">go to Product page</Link>
-        <Link to="/resultofpay">go to Pay Resault</Link>
-        <Link to="/shipping">go to Shipping</Link>
+        <Link
+          className="bg-green-950 text-white rounded-md px-7 py-3 m-5"
+          to="/login"
+        >
+          Login Admin
+        </Link>
       </div>
     </>
   );

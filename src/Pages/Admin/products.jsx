@@ -19,10 +19,12 @@
 //   );
 // };
 // export default Orders;
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar, faIR } from "@mui/x-data-grid";
 import { tokens } from "../../utils/Theme";
-import { products } from "./data/mockData";
+// import { products } from "./data/mockData";
 import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
 
@@ -78,20 +80,27 @@ const columns = [
     flex: 0.5,
   },
   {
+    field: "price",
+    headerName: "قیمت",
+    flex: 1,
+    align: "center",
+    headerAlign: "center",
+  },
+  {
     field: "brand",
     headerName: "برند ",
     flex: 1,
     cellClassName: "brand-column--cell",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
   },
   {
     field: "category",
     headerName: "دسته بندی",
     flex: 1,
     cellClassName: "category-column--cell",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
   },
   {
     field: "name",
@@ -101,18 +110,43 @@ const columns = [
     align: "right",
     headerAlign: "right",
   },
-  {
-    field: "id",
-    headerName: "شمارنده",
-    flex: 0.5,
-    align: "right",
-    headerAlign: "right",
-  },
 ];
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    const productsResponse = await axios.get(
+      "http://localhost:8000/api/products",
+      {
+        params: {
+          limit: 36, // Request all products at once
+        },
+      }
+    );
+    const categoriesResponse = await axios.get(
+      "http://localhost:8000/api/categories"
+    );
+
+    const products = productsResponse.data.data.products;
+    const categories = categoriesResponse.data.data.categories;
+
+    // Combine the data as needed
+    const combinedData = products.map((product) => ({
+      ...product,
+      category: categories.find((category) => category._id === product.category)
+        ?.name,
+    }));
+
+    return combinedData;
+  };
+  useEffect(() => {
+    fetchData().then((combinedData) => {
+      setData(combinedData);
+    });
+  }, []);
 
   return (
     <Box p="15px">
@@ -157,7 +191,8 @@ const Products = () => {
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           pageSizeOptions={[5, 10, 25]}
-          rows={products}
+          rows={data}
+          getRowId={(row) => row._id}
           columns={columns}
           localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
           components={{ Toolbar: GridToolbar }}

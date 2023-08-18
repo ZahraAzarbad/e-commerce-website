@@ -1,25 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DataGrid,
   GridCellEditStopReasons,
   faIR,
   GridToolbar,
 } from "@mui/x-data-grid";
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-} from "@mui/x-data-grid-generator";
-import { products } from "./data/mockData";
-import { Box, Button } from "@mui/material";
+import axios from "axios";
+
+import { Box } from "@mui/material";
 import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../utils/Theme";
-
 export default function SaveChangesWithButton() {
+  const [data, setData] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [editedRows, setEditedRows] = useState({});
+  const [setEditedRows] = useState({});
   const [isSaving, setIsSaving] = useState(false);
 
   const columns = [
@@ -33,13 +29,21 @@ export default function SaveChangesWithButton() {
       editable: true,
     },
     {
-      field: "inventory",
+      field: "quantity",
       headerName: "(عدد) موجودی",
       flex: 0.5,
-      cellClassName: "inventory-column--cell",
+      cellClassName: "quantity-column--cell",
       align: "center",
       headerAlign: "center",
       editable: true,
+    },
+    {
+      field: "category",
+      headerName: "دسته بندی",
+      flex: 1,
+      cellClassName: "category-column--cell",
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "name",
@@ -49,15 +53,38 @@ export default function SaveChangesWithButton() {
       align: "right",
       headerAlign: "right",
     },
-    {
-      field: "id",
-      headerName: "شمارنده",
-      flex: 0.2,
-      align: "right",
-      headerAlign: "right",
-    },
   ];
 
+  const fetchData = async () => {
+    const productsResponse = await axios.get(
+      "http://localhost:8000/api/products",
+      {
+        params: {
+          limit: 36, // Request all products at once
+        },
+      }
+    );
+    const categoriesResponse = await axios.get(
+      "http://localhost:8000/api/categories"
+    );
+
+    const products = productsResponse.data.data.products;
+    const categories = categoriesResponse.data.data.categories;
+
+    // Combine the data as needed
+    const combinedData = products.map((product) => ({
+      ...product,
+      category: categories.find((category) => category._id === product.category)
+        ?.name,
+    }));
+
+    return combinedData;
+  };
+  useEffect(() => {
+    fetchData().then((combinedData) => {
+      setData(combinedData);
+    });
+  }, []);
   const handleCellEditStop = (params, event) => {
     if (params.reason === GridCellEditStopReasons.cellFocusOut) {
       event.defaultMuiPrevented = true;
@@ -149,7 +176,8 @@ export default function SaveChangesWithButton() {
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           pageSizeOptions={[5, 10, 25]}
-          rows={products}
+          getRowId={(row) => row._id}
+          rows={data}
           columns={columns}
           localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
           components={{ Toolbar: GridToolbar }}
