@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 function Header() {
+  const [category, setCategory] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center bg-orange-400 px-5 text-green-950">
@@ -48,13 +51,28 @@ function Header() {
 
             <i className=" text-xl bi  bi-question-circle-fill"></i>
           </div>
-          <div className="flex gap-2 justify-center items-center p-1 hover:border-b-2 hover:border-b-green-950">
-            <Link to="/categorypage"></Link>
-            <i className=" text-xl bi bi-chevron-down"></i>
-            <button>
+          <div className="flex gap-2 justify-center items-center p-1 hover:border-b-2 hover:border-b-green-950 relative">
+            <button
+              className="flex gap-2 justify-center items-center"
+              onClick={() => setCategory(!category)}
+            >
+              <i className=" text-sm flex items-center bi bi-chevron-down"></i>
               <Link to="/categorypage">دسته بندی ها</Link>
+              <i className=" text-xl bi bi-layers-fill"></i>
             </button>
-            <i className=" text-xl bi bi-layers-fill"></i>
+            {category && (
+              <motion.ul
+                initial={{ y: 15, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                className="w-full text-sm rounded-b-md bg-white p-3 gap-3 flex flex-col absolute left-0 top-full"
+              >
+                <li className="headerSedenavLi">آرایشی</li>
+                <li className="headerSedenavLi">مراقبتی</li>
+                <li className="headerSedenavLi">بهداشتی </li>
+                <li className="headerSedenavLi">ماسک تخصصی</li>
+              </motion.ul>
+            )}
           </div>
           <div className="flex gap-2 justify-center items-center p-1 hover:border-b-2 hover:border-b-green-950">
             <button>

@@ -12,6 +12,11 @@
   text-align: right;
 }
 
+@layer components {
+  .headerSedenavLi {
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -23,4 +28,10 @@
 }
 ::-webkit-scrollbar-track:hover {
   background: #555;
+}
+
+.error {
+  position: absolute;
+  color: red;
+  font-size: 0.6rem;
 }

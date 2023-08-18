@@ -1,16 +1,8 @@
 // helperText={
 //   <ErrorMessage className="text-red" name="password" />
 // }
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Avatar,
-  useTheme,
-} from "@material-ui/core";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Grid, Paper, TextField, Button, Avatar } from "@material-ui/core";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -38,6 +30,7 @@ const Login = ({ handleChange }) => {
     justifyContent: "center",
     flexDirection: "column",
     gap: "20px",
+    background: "transparent",
   };
   const avatarStyle = {
     height: "150px",
@@ -77,9 +70,11 @@ const Login = ({ handleChange }) => {
           Cookies.set("accessToken", token.accessToken);
           Cookies.set("refreshToken", token.refreshToken);
           navigate("/orders/inprogress");
+        } else {
         }
       });
   };
+
   return (
     <div className="h-screen flex items-center justify-center bg-login-bg relative">
       <div className="absolute top-3 left-3 bg-orange-600 text-white rounded-md">
@@ -94,7 +89,7 @@ const Login = ({ handleChange }) => {
         </Button>
       </div>
 
-      <Grid>
+      <Grid sx={{ background: "transparent" }}>
         <Paper style={paperStyle}>
           <Grid align="center">
             <Avatar style={avatarStyle}>
@@ -162,7 +157,7 @@ const Login = ({ handleChange }) => {
                   style={btnstyle}
                   fullWidth
                 >
-                  {props.isSubmitting ? "درحال بررسی" : "ورود"}
+                  ورود
                 </Button>
               </Form>
             )}
