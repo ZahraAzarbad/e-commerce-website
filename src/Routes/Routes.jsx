@@ -19,6 +19,8 @@ import Calendar from "../Pages/Admin/Calendar";
 import Signup from "../Pages/Signup/Signup";
 import Cart from "../Pages/Client/Cart";
 import Dashboard from "../Pages/Admin/Scenes/Dashboard";
+import ProtectedRoute from "./protectedRoute";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -55,49 +57,93 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/orders/deliverd",
-        element: <DeliveredOrders />,
+        element: (
+          <PrivateRoute>
+            <DeliveredOrders />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/orders/inprogress",
-        element: <InProgressOrders />,
+        element: (
+          <PrivateRoute>
+            <InProgressOrders />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/priceandinventory",
-        element: <PriceAndInventory />,
+        element: (
+          <PrivateRoute>
+            <PriceAndInventory />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/products",
-        element: <Products />,
+        element: (
+          <PrivateRoute>
+            <Products />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/bar",
-        element: <Bar />,
+        element: (
+          <PrivateRoute>
+            <Bar />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/line",
-        element: <Line />,
+        element: (
+          <PrivateRoute>
+            <Line />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/pie",
-        element: <Pie />,
+        element: (
+          <PrivateRoute>
+            <Pie />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/FAQ",
-        element: <FAQ />,
+        element: (
+          <PrivateRoute>
+            <FAQ />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/calendar",
-        element: <Calendar />,
+        element: (
+          <PrivateRoute>
+            <Calendar />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <ProtectedRoute>
+        <Login />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/signup",
