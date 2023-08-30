@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { DataGrid, GridToolbar, faIR } from "@mui/x-data-grid";
 import { tokens } from "../../utils/Theme";
 import { inProgressOrders } from "./data/mockData";
@@ -24,7 +24,7 @@ const columns = [
       return (
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={(event) => {
             handleClick(event, cellValues);
           }}
@@ -65,22 +65,38 @@ const columns = [
 const InProgressOrders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   return (
     <Box m="20px">
       <Title title="سفارشات" subtitle="بررسی و ویرایش اطلاعات سفارشات" />
-
-      <div className="flex justify-center items-center text-white">
-        <button className="bg-slate-700 px-10 py-3 rounded-l-md">
+      <Box
+        sx={{
+          display: "flex",
+          gap: "10px",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          textAlign="center"
+          padding="5px 15px"
+          fontSize="20px"
+          bgcolor={colors.blueAccent[950]}
+          borderRadius="5px"
+        >
           سفارشات در حال انجام
-        </button>
+        </Typography>
         <Link to="/orders/deliverd">
-          <button className="bg-slate-800 text-slate-600 px-10 py-3 rounded-r-md">
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              padding: "5px 15px",
+              fontSize: "20px",
+            }}
+          >
             سفارشات تحویل داده شده
-          </button>
+          </Button>
         </Link>
-      </div>
-
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"

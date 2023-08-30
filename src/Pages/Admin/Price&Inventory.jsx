@@ -5,12 +5,11 @@ import {
   faIR,
   GridToolbar,
 } from "@mui/x-data-grid";
-import axios from "axios";
-
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../utils/Theme";
+import publicAxios from "../../Services/instances/publicAxios";
 export default function SaveChangesWithButton() {
   const [data, setData] = useState([]);
   const theme = useTheme();
@@ -53,20 +52,34 @@ export default function SaveChangesWithButton() {
       align: "right",
       headerAlign: "right",
     },
+    {
+      field: "images",
+      headerName: "عکس",
+      flex: 1,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => (
+        <img
+          src={`http://localhost:8000/images/products/images/${params.row.images[0]}`}
+          alt={`Product ${params.row._id}`}
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "10px",
+            padding: "3px",
+          }}
+        />
+      ),
+    },
   ];
 
   const fetchData = async () => {
-    const productsResponse = await axios.get(
-      "http://localhost:8000/api/products",
-      {
-        params: {
-          limit: 36, // Request all products at once
-        },
-      }
-    );
-    const categoriesResponse = await axios.get(
-      "http://localhost:8000/api/categories"
-    );
+    const productsResponse = await publicAxios.get("/products", {
+      params: {
+        limit: 1000, // Request all products at once
+      },
+    });
+    const categoriesResponse = await publicAxios.get("/categories");
 
     const products = productsResponse.data.data.products;
     const categories = categoriesResponse.data.data.categories;
@@ -159,21 +172,23 @@ export default function SaveChangesWithButton() {
           },
         }}
       >
-        <button
+        <Button
           style={{
             backgroundColor: "green",
             padding: "5px 10px",
             borderRadius: "3px",
             margin: "5px",
+            color: "white",
+            fontSize: "18px",
           }}
           onClick={handleSaveChanges}
           disabled={isSaving}
         >
           {isSaving ? "Saving..." : "ذخیره تغییرات"}
-        </button>
+        </Button>
         <DataGrid
           initialState={{
-            pagination: { paginationModel: { pageSize: 5 } },
+            pagination: { paginationModel: { pageSize: 10 } },
           }}
           pageSizeOptions={[5, 10, 25]}
           getRowId={(row) => row._id}

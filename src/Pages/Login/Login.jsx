@@ -1,19 +1,19 @@
-// helperText={
-//   <ErrorMessage className="text-red" name="password" />
-// }
-import { Grid, Paper, TextField, Button, Avatar } from "@material-ui/core";
+import { Grid, Paper, TextField, Button, Avatar, Box } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import publicAxios from "../../Services/instances/publicAxios";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../utils/Theme";
 
-const Login = ({ handleChange }) => {
+const Login = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
-
   const paperStyle = {
     padding: "40px 20px",
     height: "520px",
@@ -36,11 +36,25 @@ const Login = ({ handleChange }) => {
     height: "150px",
     width: "150px",
   };
+  const backBtn = {
+    display: "flex",
+    padding: "5px 10px",
+    position: "absolute",
+    top: "10px",
+    left: "10px",
+  };
   const btnstyle = { margin: "8px 0" };
-
   const initialValues = {
     username: "",
     password: "",
+  };
+  const container = {
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    backgroundImage: `url('./src/assets/img/bglogin.png')`,
   };
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -50,7 +64,7 @@ const Login = ({ handleChange }) => {
       .min(6, "رمز باید حداقل دارای 6 کاراکتر باشد")
       .required("رمز الزامی است"),
   });
-  const onSubmit = (values, props) => {
+  const onSubmit = (values, { resetForm }) => {
     if (values.username !== "admin" && values.password !== "admin1234") {
       setTimeout(() => {
         props.resetForm();
@@ -58,38 +72,21 @@ const Login = ({ handleChange }) => {
       }, 20);
       toast.error("نام کاربری یا رمز عبور اشتباه است");
     }
-    axios
-      .post("http://localhost:8000/api/auth/login", values)
-      .then((response) => {
-        console.log(response);
-        if (
-          response.status === 200 &&
-          response.data.data.user.role === "ADMIN"
-        ) {
-          const token = response.data.token;
-          Cookies.set("accessToken", token.accessToken);
-          Cookies.set("refreshToken", token.refreshToken);
-          navigate("/orders/inprogress");
-        } else {
-        }
-      });
+    publicAxios.post("/auth/login", values).then((res) => {
+      Cookies.set("accessToken", res.data.token.accessToken);
+      Cookies.set("refreshToken", res.data.token.refreshToken);
+      // console.log(res);
+      navigate("/orders/inprogress");
+    });
   };
-
   return (
-    <div className="h-screen flex items-center justify-center bg-login-bg relative">
-      <div className="absolute top-3 left-3 bg-orange-600 text-white rounded-md">
-        <Button
-          sx={{
-            fontSize: "14px",
-            padding: "5px 15px",
-          }}
-        >
-          <ArrowBackIcon sx={{ mr: "10px" }} />
-          <Link to="/">بازگشت به سایت</Link>
-        </Button>
-      </div>
+    <Box style={container}>
+      <Button style={backBtn} color="primary">
+        <ArrowBackIcon sx={{ mr: "10px" }} />
+        <Link to="/">بازگشت به سایت</Link>
+      </Button>
 
-      <Grid sx={{ background: "transparent" }}>
+      <Grid>
         <Paper style={paperStyle}>
           <Grid align="center">
             <Avatar style={avatarStyle}>
@@ -165,7 +162,7 @@ const Login = ({ handleChange }) => {
         </Paper>
       </Grid>
       <ToastContainer />
-    </div>
+    </Box>
   );
 };
 
