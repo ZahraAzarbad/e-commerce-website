@@ -3,7 +3,7 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import { Link } from "react-router-dom";
 
-function ProductCard({ name, image, price }) {
+function ProductCard({ name, image, price, id }) {
   return (
     <div className="w-48 flex flex-col justify-between items-center gap-2 px-3 py-3 my-2 bg-green-200  ">
       <Image imgSrc={image} className="rounded-md" />
@@ -12,7 +12,7 @@ function ProductCard({ name, image, price }) {
         <p>تومان{price}</p>
         <div className="flex gap-2">
           <AddShoppingCartOutlinedIcon />
-          <Link to="/ProductPage">
+          <Link to={`/ProductPage/${id}`}>
             <ReadMoreOutlinedIcon />
           </Link>
         </div>

@@ -81,12 +81,21 @@ function Header() {
                 initial={{ y: 15, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                className="w-full text-sm rounded-b-md bg-white p-3 gap-3 flex flex-col absolute left-0 top-full"
+                className="w-full text-sm rounded-b-md bg-white p-3 gap-3 flex flex-col absolute left-0 top-full z-20"
               >
-                <li className="headerSedenavLi">آرایشی</li>
-                <li className="headerSedenavLi">مراقبتی</li>
-                <li className="headerSedenavLi">بهداشتی </li>
-                <li className="headerSedenavLi">ماسک تخصصی</li>
+                <Link to="/categorypage/64d8f4cbc2e821617d738c27">
+                  <li className="headerSedenavLi">آرایشی</li>
+                </Link>
+                <Link to="/categorypage/64dd42bdd7c6f41d3873157c">
+                  <li className="headerSedenavLi">مراقبتی</li>
+                </Link>
+                <Link to="/categorypage/64dc80dff88b88b5f4068bd6">
+                  <li className="headerSedenavLi">بهداشتی </li>
+                </Link>
+
+                <Link to="/categorypage/64de50a56666f434559bc21e">
+                  <li className="headerSedenavLi">ماسک تخصصی</li>
+                </Link>
               </motion.ul>
             )}
           </div>
