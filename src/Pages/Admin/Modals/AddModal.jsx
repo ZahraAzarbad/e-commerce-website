@@ -34,7 +34,7 @@ const MyModal = ({ open, onClose, addProduct }) => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [brand, setBrand] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   const cacheRtl = createCache({
@@ -61,7 +61,6 @@ const MyModal = ({ open, onClose, addProduct }) => {
       price,
       quantity,
     };
-    console.log(data);
     const form = new FormData();
     for (const key in data) {
       const value = data[key];
@@ -82,6 +81,11 @@ const MyModal = ({ open, onClose, addProduct }) => {
       .then((response) => {
         const newProduct = response.data.data.product;
         addProduct(newProduct);
+        setBrand("");
+        setName("");
+        setPrice("");
+        setQuantity("");
+        setDescription("");
         onClose();
       });
   };
@@ -98,9 +102,6 @@ const MyModal = ({ open, onClose, addProduct }) => {
       setSubCategory(response.data.data.subcategories);
     });
   }, []);
-  // const handleImageChange = (imageFile) => {
-  //   setImageFile((data) => [...data, imageFile]);
-  // };
   function handleImageChange(e) {
     console.log(e.target.files);
     setImageFile([e.target.files[0]]);
@@ -148,13 +149,12 @@ const MyModal = ({ open, onClose, addProduct }) => {
                 label="دسته بندی"
                 className="font-secondary"
                 onChange={(e) => {
-                  setSelectedCategory(e.target.value),
-                    console.log(e.target.value);
+                  setSelectedCategory(e.target.value);
                 }}
               >
                 {category.map((category) => (
                   <MenuItem key={category._id} value={category._id}>
-                    {category.name}
+                    {category?.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -169,7 +169,6 @@ const MyModal = ({ open, onClose, addProduct }) => {
                 className="font-secondary"
                 onChange={(e) => {
                   setSelectedSubcategory(e.target.value);
-                  console.log(e.target.value);
                 }}
               >
                 {subcategory

@@ -10,12 +10,14 @@ import Title from "../../Components/Title";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../utils/Theme";
 import publicAxios from "../../Services/instances/publicAxios";
+import { updateQueue } from "../../Services/api/updateQueue";
 export default function SaveChangesWithButton() {
   const [data, setData] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [setEditedRows] = useState({});
+  const [editedRows, setEditedRows] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [focusedCell, setFocusedCell] = useState(null);
 
   const columns = [
     {
@@ -98,41 +100,68 @@ export default function SaveChangesWithButton() {
       setData(combinedData);
     });
   }, []);
+
   const handleCellEditStop = (params, event) => {
     if (params.reason === GridCellEditStopReasons.cellFocusOut) {
       event.defaultMuiPrevented = true;
+    } else {
+      setFocusedCell(params.id);
     }
   };
 
-  const handleEditCellChange = (params) => {
-    setEditedRows((prevEditedRows) => ({
-      ...prevEditedRows,
-      [params.id]: {
-        ...prevEditedRows[params.id],
-        [params.field]: params.value,
-      },
-    }));
+  const handleKeyChange = (key, event) => {
+    const isExist = editedRows.find((item) => item.id === key.id);
+    if (!!isExist) {
+      setTimeout(() => {
+        if (event.key === "Escape") {
+          setEditedRows((data) => {
+            const result = data.map((item) => {
+              return item.id === key.id
+                ? { id: key.id, [key.field]: key.formattedValue }
+                : item;
+            });
+            return result;
+          });
+        } else {
+          setEditedRows(
+            editedRows.map((item) => {
+              if (item.id === isExist.id) {
+                return { ...item, [key.field]: event.target.value };
+              }
+              return { ...item };
+            })
+          );
+        }
+      }, 500);
+    } else {
+      setTimeout(() => {
+        setEditedRows([
+          ...editedRows,
+          {
+            id: key.id,
+            [key.field]: event.target.value,
+          },
+        ]);
+        console.log(event.target.value);
+      }, 500);
+    }
   };
-
-  const handleEditCellCommit = (params) => {
-    setEditedRows((prevEditedRows) => ({
-      ...prevEditedRows,
-      [params.id]: {
-        ...prevEditedRows[params.id],
-        [params.field]: params.value,
-      },
-    }));
-  };
+  console.log(editedRows);
 
   const handleSaveChanges = async () => {
     setIsSaving(true);
-
-    // Here you can send the entire editedRows object to your server to save the changes
-    // Example of sending data to a hypothetical saveChanges function
-    // await saveChanges(editedRows);
-
-    setIsSaving(false);
+    updateQueue(editedRows).then((res) => {
+      console.log(res);
+      setIsSaving(false);
+    });
   };
+
+  // Here you can send the entire editedRows object to your server to save the changes
+  // Example of sending data to a hypothetical saveChanges function
+  // await saveChanges(editedRows);
+
+  // setIsSaving(false);
+  // };
 
   return (
     <Box p="15px">
@@ -184,7 +213,7 @@ export default function SaveChangesWithButton() {
           onClick={handleSaveChanges}
           disabled={isSaving}
         >
-          {isSaving ? "Saving..." : "ذخیره تغییرات"}
+          {isSaving ? "درحال بررسی" : "ذخیره تغییرات"}
         </Button>
         <DataGrid
           initialState={{
@@ -197,8 +226,7 @@ export default function SaveChangesWithButton() {
           localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
           components={{ Toolbar: GridToolbar }}
           onCellEditStop={handleCellEditStop}
-          onEditCellChange={handleEditCellChange}
-          onEditCellCommit={handleEditCellCommit}
+          onCellKeyDown={handleKeyChange}
         />
       </Box>
     </Box>

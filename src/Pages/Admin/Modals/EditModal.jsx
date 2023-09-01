@@ -21,6 +21,7 @@ import privateAxios from "../../../Services/instances/privateAxios";
 import { useEffect, useState } from "react";
 import { Upload } from "antd";
 import { tokens } from "../../../utils/Theme";
+import publicAxios from "../../../Services/instances/publicAxios";
 
 const EditModal = ({ open, onClose, editingProduct }) => {
   const theme = useTheme();
@@ -35,7 +36,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
   const [brand, setBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
-
+  // console.log(editingProduct);
   const modalStyle = {
     width: "full",
     display: "flex",
@@ -50,8 +51,9 @@ const EditModal = ({ open, onClose, editingProduct }) => {
 
   useEffect(() => {
     if (editingProduct) {
-      setName(editingProduct.name);
       setSelectedCategory(editingProduct.category);
+      setName(editingProduct.name);
+      // setSelectedCategory(editingProduct.category);
       setSelectedSubcategory(editingProduct.subcategory);
       setPrice(editingProduct.price);
       setQuantity(editingProduct.quantity);
@@ -90,10 +92,14 @@ const EditModal = ({ open, onClose, editingProduct }) => {
   const handleDescriptionChange = (data) => {
     setDescription(data);
   };
-
   useEffect(() => {
-    privateAxios.get("/categories").then((res) => {
+    publicAxios.get("/categories").then((res) => {
       setCategory(res.data.data.categories);
+      const myCategory = res.data.data.categories.filter((item) => {
+        return item._id === editingProduct.category;
+      });
+      console.log(myCategory);
+      setSelectedCategory(myCategory._id);
     });
     privateAxios.get("/subcategories").then((response) => {
       setSubCategory(response.data.data.subcategories);
@@ -104,6 +110,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
     console.log(e.target.files);
     setImageFile([e.target.files[0]]);
   }
+  console.log(editingProduct);
   return (
     <CacheProvider value={cacheRtl}>
       <div dir="rtl">
@@ -140,6 +147,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={selectedCategory}
+                defaultValue={editingProduct}
                 label="دسته بندی"
                 className="font-secondary"
                 onChange={(e) => {

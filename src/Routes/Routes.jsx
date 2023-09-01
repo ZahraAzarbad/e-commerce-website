@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/categorypage",
+        path: "/categorypage/:id",
         element: <CategoryPage />,
       },
       {
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "/productpage",
+        path: "/productpage/:id",
         element: <ProductPage />,
       },
       {

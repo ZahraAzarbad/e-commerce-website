@@ -16,7 +16,7 @@ const Products = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const [changeData, setChangeData] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
 
@@ -44,6 +44,7 @@ const Products = () => {
 
   const addProduct = (newProduct) => {
     setData((prevData) => [...prevData, newProduct]);
+    setChangeData((s) => !s);
   };
 
   const openModal = () => {
@@ -53,30 +54,58 @@ const Products = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const fetchData = async () => {
-    const productsResponse = await publicAxios.get("/products", {
-      params: {
-        limit: 1000, // Request all products at once
-      },
-    });
-    const categoriesResponse = await publicAxios.get("/categories");
+    const [productsResponse, categoriesResponse] = await Promise.all([
+      publicAxios.get("/products", {
+        params: {
+          limit: 1000, // Request all products at once
+        },
+      }),
+      publicAxios.get("/categories"),
+    ]);
+
     const products = productsResponse.data.data.products;
     const categories = categoriesResponse.data.data.categories;
 
     // Combine the data as needed
     const combinedData = products.map((product) => ({
       ...product,
-      category: categories.find((category) => category._id === product.category)
-        ?.name,
+      category:
+        categories.find((category) => category._id === product.category)
+          ?.name || "",
     }));
+
     return combinedData;
   };
+
+  // const fetchData = async () => {
+  //   const productsResponse = await publicAxios.get("/products", {
+  //     params: {
+  //       limit: 1000, // Request all products at once
+  //     },
+  //   });
+  //   const categoriesResponse = await publicAxios.get("/categories");
+  //   const products = productsResponse.data.data.products;
+  //   const categories = categoriesResponse.data.data.categories;
+
+  //   // Combine the data as needed
+  //   const combinedData = products.map((product) => ({
+  //     ...product,
+  //     category: categories.find((category) => category._id === product.category)
+  //       ?.name,
+  //   }));
+  //   return combinedData;
+  // };
+  // useEffect(() => {
+  //   fetchData().then((combinedData) => {
+  //     setData(combinedData);
+  //   });
+  // }, []);
   useEffect(() => {
     fetchData().then((combinedData) => {
       setData(combinedData);
     });
-  }, []);
+  }, [changeData]);
 
   const handleCellClick = (param, event) => {
     event.stopPropagation();
@@ -251,6 +280,7 @@ const Products = () => {
           onCellClick={handleCellClick}
           onRowClick={handleRowClick}
         />
+
         <DeleteModal
           open={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
