@@ -26,6 +26,7 @@ const HomePage = () => {
             products={products}
             categoryId={category._id}
             name={category.name}
+            icon={`http://localhost:8000/images/categories/icons/${category.icon}`}
           />
         );
       })}

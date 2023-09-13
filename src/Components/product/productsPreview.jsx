@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ProductCard from "../../Components/product/ProductCard";
 
-function ProductsPreview({ categories, products, categoryId, name }) {
+function ProductsPreview({ categories, products, categoryId, name, icon }) {
   const filteredProducts = products.data.products.filter(
     (item) => item.category === categoryId
   );
@@ -10,12 +10,15 @@ function ProductsPreview({ categories, products, categoryId, name }) {
     Math.max(filteredProducts.length - 6, 0)
   );
   return (
-    <div className="bg-orange-100">
+    <div className="my-8">
       <Link to={`/categorypage/${categoryId}`}>
-        <div className="px-6 pt-2 text-3xl text-green-950">{name}</div>
+        <div className=" flex gap-3 justify-end px-6 py-2 text-3xl text-green-950">
+          {name}
+          <img className="rounded-full" src={icon} />
+        </div>
       </Link>
 
-      <div className="px-5 pb-2 my-7 text-3xl flex gap-2 justify-center">
+      <div className="px-5 py-2 text-3xl flex gap-4 justify-center">
         {lastSixProducts.map((product) => (
           <ProductCard
             id={product._id}

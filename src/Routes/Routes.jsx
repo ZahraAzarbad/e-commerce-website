@@ -21,6 +21,8 @@ import Cart from "../Pages/Client/Cart";
 import Dashboard from "../Pages/Admin/Scenes/Dashboard";
 import ProtectedRoute from "./protectedRoute";
 import PrivateRoute from "./PrivateRoute";
+import PayPal from "../Pages/Client/PayPal";
+import Accept from "../Pages/Client/Accept";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/paypal",
+        element: <PayPal />,
+      },
+      {
+        path: "/accept",
+        element: <Accept />,
       },
       {
         path: "/productpage/:id",
