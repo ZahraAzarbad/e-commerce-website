@@ -22,19 +22,24 @@ import { useEffect, useState } from "react";
 import { Upload } from "antd";
 import { tokens } from "../../../utils/Theme";
 import publicAxios from "../../../Services/instances/publicAxios";
+import { useSelector } from "react-redux";
+import { handleMedias } from "../../../utils/helper";
 
 const EditModal = ({ open, onClose, editingProduct }) => {
+  const cartCategories = useSelector((state) => state.categories.categories);
+  console.log(cartCategories);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [name, setName] = useState("");
   const [category, setCategory] = useState([]);
   const [subcategory, setSubCategory] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState([]);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [brand, setBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   // console.log(editingProduct);
   const modalStyle = {
@@ -51,14 +56,24 @@ const EditModal = ({ open, onClose, editingProduct }) => {
 
   useEffect(() => {
     if (editingProduct) {
-      setSelectedCategory(editingProduct.category);
-      setName(editingProduct.name);
       // setSelectedCategory(editingProduct.category);
+      setName(editingProduct.name);
+      setSelectedCategory(
+        cartCategories.data.categories.find(
+          (c) => c.name === editingProduct.category
+        )._id
+      );
       setSelectedSubcategory(editingProduct.subcategory);
       setPrice(editingProduct.price);
       setQuantity(editingProduct.quantity);
       setBrand(editingProduct.brand);
       setDescription(editingProduct.description);
+      setCategory(cartCategories.data.categories);
+      console.log(editingProduct);
+      handleMedias(editingProduct.images).then((res) => {
+        setImageFile(res);
+        console.log(res);
+      });
     }
   }, [editingProduct]);
 
@@ -88,29 +103,29 @@ const EditModal = ({ open, onClose, editingProduct }) => {
     });
     onClose();
   };
-
+  console.log(imageFile);
   const handleDescriptionChange = (data) => {
     setDescription(data);
   };
-  useEffect(() => {
-    publicAxios.get("/categories").then((res) => {
-      setCategory(res.data.data.categories);
-      const myCategory = res.data.data.categories.filter((item) => {
-        return item._id === editingProduct.category;
-      });
-      console.log(myCategory);
-      setSelectedCategory(myCategory._id);
-    });
-    privateAxios.get("/subcategories").then((response) => {
-      setSubCategory(response.data.data.subcategories);
-    });
-  }, []);
+  // useEffect(() => {
+  //   publicAxios.get("/categories").then((res) => {
+  //     setCategory(res.data.data.categories);
+  //     const myCategory = res.data.data.categories.filter((item) => {
+  //       return item._id === editingProduct.category;
+  //     });
+  //     console.log(myCategory);
+  //     setSelectedCategory(myCategory);
+  //   });
+  //   privateAxios.get("/subcategories").then((response) => {
+  //     setSubCategory(response.data.data.subcategories);
+  //   });
+  // }, []);
 
   function handleImageChange(e) {
     console.log(e.target.files);
     setImageFile([e.target.files[0]]);
   }
-  console.log(editingProduct);
+  console.log(selectedCategory);
   return (
     <CacheProvider value={cacheRtl}>
       <div dir="rtl">
@@ -147,7 +162,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={selectedCategory}
-                defaultValue={editingProduct}
+                defaultValue={selectedCategory}
                 label="دسته بندی"
                 className="font-secondary"
                 onChange={(e) => {
@@ -203,14 +218,15 @@ const EditModal = ({ open, onClose, editingProduct }) => {
             />
             <Upload
               listType="picture-card"
+              defaultFileList={imageFile}
               showUploadList={true}
               beforeUpload={(file) => {
-                setImageFile(file);
+                setImageFile(imageFile);
                 return false; // Prevent default behavior (uploading)
               }}
               onChange={(info) => {
                 if (info.file.status === "done") {
-                  setImageFile(info.file.originFileObj);
+                  setImageFile((list) => [...list, info.file.originFileObj]);
                 }
               }}
               type="file"

@@ -116,9 +116,13 @@ export default function SaveChangesWithButton() {
         if (event.key === "Escape") {
           setEditedRows((data) => {
             const result = data.map((item) => {
-              return item.id === key.id
-                ? { id: key.id, [key.field]: key.formattedValue }
-                : item;
+              if (item.id === key.id) {
+                delete item[key.field];
+                return item;
+              }
+              return item;
+
+              // id: key.id, [key.field]: key.formattedValue
             });
             return result;
           });
@@ -153,6 +157,7 @@ export default function SaveChangesWithButton() {
     updateQueue(editedRows).then((res) => {
       console.log(res);
       setIsSaving(false);
+      // setFocusedCell(null);
     });
   };
 
@@ -213,7 +218,7 @@ export default function SaveChangesWithButton() {
           onClick={handleSaveChanges}
           disabled={isSaving}
         >
-          {isSaving ? "درحال بررسی" : "ذخیره تغییرات"}
+          {isSaving ? "" : "ذخیره تغییرات"}
         </Button>
         <DataGrid
           initialState={{
