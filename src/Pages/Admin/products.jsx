@@ -78,29 +78,6 @@ const Products = () => {
     return combinedData;
   };
 
-  // const fetchData = async () => {
-  //   const productsResponse = await publicAxios.get("/products", {
-  //     params: {
-  //       limit: 1000, // Request all products at once
-  //     },
-  //   });
-  //   const categoriesResponse = await publicAxios.get("/categories");
-  //   const products = productsResponse.data.data.products;
-  //   const categories = categoriesResponse.data.data.categories;
-
-  //   // Combine the data as needed
-  //   const combinedData = products.map((product) => ({
-  //     ...product,
-  //     category: categories.find((category) => category._id === product.category)
-  //       ?.name,
-  //   }));
-  //   return combinedData;
-  // };
-  // useEffect(() => {
-  //   fetchData().then((combinedData) => {
-  //     setData(combinedData);
-  //   });
-  // }, []);
   useEffect(() => {
     fetchData().then((combinedData) => {
       setData(combinedData);

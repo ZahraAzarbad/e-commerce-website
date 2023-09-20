@@ -5,15 +5,14 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchcategories } from "../Services/categoriesSlice";
 import HeaderBottom from "../Components/Header/HeaderBottom";
-import { addToCart, initCart } from "../Services/instances/CartSlice";
+import { addToCart } from "../Services/instances/CartSlice";
 const HomeLayout = () => {
   const dispatch = useDispatch();
 
-  // const cartProduct = localStorage.getItem("cart");
-  // dispatch(addToCart(cartProduct));
-  let cart = localStorage.getItem("cart") || "[]";
-  cart = JSON.parse(cart);
-  dispatch(initCart(cart));
+  let cart = localStorage.getItem("basket");
+  if (!cart) {
+    dispatch(addToCart(cart));
+  }
 
   useEffect(() => {
     dispatch(fetchcategories());

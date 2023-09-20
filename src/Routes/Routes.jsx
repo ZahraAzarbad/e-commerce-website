@@ -23,6 +23,8 @@ import ProtectedRoute from "./protectedRoute";
 import PrivateRoute from "./PrivateRoute";
 import PayPal from "../Pages/Client/PayPal";
 import Accept from "../Pages/Client/Accept";
+import SignIn from "../Pages/Signup/SignIn";
+import ProtectedRouteDashboard from "./PtotectedRoutDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +60,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/shipping",
-        element: <Shipping />,
+        element: (
+          <PrivateRoute path="/signin">
+            <Shipping />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -76,9 +82,9 @@ export const router = createBrowserRouter([
       {
         path: "/orders/inprogress",
         element: (
-          <PrivateRoute>
+          <ProtectedRouteDashboard>
             <InProgressOrders />
-          </PrivateRoute>
+          </ProtectedRouteDashboard>
         ),
       },
       {
@@ -149,14 +155,18 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <ProtectedRoute>
-        <Login />
-      </ProtectedRoute>
-    ),
+    element: <Login />,
   },
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/signin",
+    element: (
+      <ProtectedRoute>
+        <SignIn />
+      </ProtectedRoute>
+    ),
   },
 ]);

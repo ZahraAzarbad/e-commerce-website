@@ -9,8 +9,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import publicAxios from "../../Services/instances/publicAxios";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../utils/Theme";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../Services/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
@@ -75,7 +78,8 @@ const Login = () => {
     publicAxios.post("/auth/login", values).then((res) => {
       Cookies.set("accessToken", res.data.token.accessToken);
       Cookies.set("refreshToken", res.data.token.refreshToken);
-      // console.log(res);
+      console.log(res);
+      dispatch(addUser(res.data));
       navigate("/orders/inprogress");
     });
   };

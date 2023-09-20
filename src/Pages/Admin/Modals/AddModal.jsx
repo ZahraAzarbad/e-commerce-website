@@ -222,7 +222,7 @@ const MyModal = ({ open, onClose, addProduct }) => {
                 <div>آپلود عکس</div>
               </div>
             </Upload>
-            {/* <ImageUpload onImageChange={handleImageChange} /> */}
+
             <ReactQuill
               style={{ marginTop: 8, backgroundColor: colors.primary[700] }}
               value={description}

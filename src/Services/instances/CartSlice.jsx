@@ -11,14 +11,20 @@ const initialState = {
 };
 
 export const cartSlice = createSlice({
-  name: "cart",
+  name: "basket",
   initialState,
   reducers: {
     addToCart: (state, { payload }) => {
+      // console.log(action);
       const item = state.products.find((item) => item?._id === payload?._id);
+      // console.log(state.products)
+      // console.log(payload);
       if (!item) {
+        console.log(payload);
         state.products.push(payload);
-        // localStorage.setItem("cart", JSON.stringify(state.products));
+        // console.log([...state.products]);
+        // localStorage.setItem("basket",JS)
+        localStorage.setItem("basket", JSON.stringify([...state.products]));
         state.message.status = "success";
       } else {
         state.message.status = "error";
@@ -36,7 +42,7 @@ export const cartSlice = createSlice({
         (item) => item._id === action.payload._id
       );
       if (item) {
-        item.quantity++;
+        item.count++;
       }
     },
     drecreaseQuantity: (state, action) => {
@@ -46,33 +52,10 @@ export const cartSlice = createSlice({
       if (item.quantity === 1) {
         item.quantity = 1;
       } else {
-        item.quantity--;
+        item.count--;
       }
     },
 
-    addDelivery: (state, { payload }) => {
-      state.deliveryDate = payload.deliveryDate;
-      state.deliveryState = payload.deliveryState;
-      localStorage.setItem(
-        "delivery",
-        JSON.stringify({
-          date: payload.deliveryDate,
-          status: payload.deliveryState,
-        })
-      );
-    },
-    updateProduct: (state, { payload }) => {
-      state.products = state.products.map((product) =>
-        product._id === payload._id ? payload : product
-      );
-      localStorage.setItem("cart", JSON.stringify(state.products));
-    },
-    initCart: (state, { payload }) => {
-      state.products = payload;
-      state.message.message = "";
-      state.message.status = "";
-      localStorage.setItem("cart", JSON.stringify([]));
-    },
     cleanMessage: (state) => {
       state.message.status = "";
     },
@@ -81,12 +64,10 @@ export const cartSlice = createSlice({
 
 export const {
   addToCart,
-  addDelivery,
   deleteProducts,
   increaseQuantity,
   drecreaseQuantity,
-  updateProduct,
-  initCart,
   cleanMessage,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;
