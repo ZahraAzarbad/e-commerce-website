@@ -157,16 +157,8 @@ export default function SaveChangesWithButton() {
     updateQueue(editedRows).then((res) => {
       console.log(res);
       setIsSaving(false);
-      // setFocusedCell(null);
     });
   };
-
-  // Here you can send the entire editedRows object to your server to save the changes
-  // Example of sending data to a hypothetical saveChanges function
-  // await saveChanges(editedRows);
-
-  // setIsSaving(false);
-  // };
 
   return (
     <Box p="15px">

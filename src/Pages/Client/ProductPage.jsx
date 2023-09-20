@@ -11,9 +11,8 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { useDispatch } from "react-redux";
-import addToCart from "../../Services/instances/CartSlice";
+import { addToCart } from "../../Services/instances/CartSlice";
 
-// import './styles.css';
 const ProductPage = () => {
   const dispatch = useDispatch();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -21,9 +20,6 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [isOrder, setIsOrder] = useState(false);
 
-  // if (product?.quantity === 0) {
-  //   setIsOrder(true);
-  // }
   console.log(product?.description);
   const { id } = useParams();
   useEffect(() => {
@@ -40,9 +36,10 @@ const ProductPage = () => {
   };
 
   const handleAddToCart = () => {
-    console.log(`Added ${selectedQuantity} units of ${product.name} to cart.`);
-    console.log({ ...product, quantity: selectedQuantity });
-    dispatch(addToCart({ ...product, quantity: selectedQuantity }));
+    console.log(product);
+    const cartProduct = { ...product, count: selectedQuantity };
+    console.log(cartProduct);
+    dispatch(addToCart(cartProduct));
   };
   if (!product) {
     return <p>Loading</p>;

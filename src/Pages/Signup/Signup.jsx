@@ -1,23 +1,25 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import publicAxios from "../../Services/instances/publicAxios";
+import Cookies from "js-cookie";
+import { Navigate } from "react-router";
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required("First Name is required"),
-  lastName: Yup.string().required("Last Name is required"),
+  firstName: Yup.string().required("نام باید وارد شود"),
+  lastName: Yup.string().required("نام خانوادگی باید وارد شود"),
   userName: Yup.string()
-    .min(5, "Password must be at least 6 characters")
-    .required("Password is required"),
+    .min(5, "نام کاربری باید حداقل 5 کاراکتر باشد")
+    .required("نام کاربری الزامی است"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
+    .min(6, "رمز باید حداقل دارای 6 کاراکتر باشد")
+    .required(" رمز الزامی است"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
-  address: Yup.string().required("Address is required"),
+    .oneOf([Yup.ref("password"), null], "رمز هم خوانی ندارد")
+    .required("تکرار رمز الزامی است"),
+  address: Yup.string().required("آدرس باید وارد شود"),
   phoneNumber: Yup.string()
-    .matches(/^\d{10}$/, "Invalid phone number")
-    .required("Phone Number is required"),
-  date: Yup.date().required("Date is required"),
+    .matches(/^\d{10}$/, "شماره تلفن صحیح نمی باشد")
+    .required("شماره تلفن باید وارد شود"),
 });
 
 const Signup = () => {
@@ -37,18 +39,36 @@ const Signup = () => {
     },
   });
 
+  const onSubmit = (values, { resetForm }) => {
+    // if (values.username !== "admin" && values.password !== "admin1234") {
+    //   setTimeout(() => {
+    //     props.resetForm();
+    //     props.setSubmitting(false);
+    //   }, 20);
+    //   toast.error("نام کاربری یا رمز عبور اشتباه است");
+    // }
+    publicAxios.post("/auth/user", values).then((res) => {
+      Cookies.set("accessToken", res.data.token.accessToken);
+      Cookies.set("refreshToken", res.data.token.refreshToken);
+      // console.log(res);
+      Navigate("/shipping");
+    });
+  };
+
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-semibold mb-4">Registration Form</h2>
-      <form onSubmit={formik.handleSubmit}>
+    <div className="max-w-md mx-auto my-10  bg-skincare rounded-lg shadow-xl text-lg font-semibold">
+      <h2 className="w-full bg-green-900 p-5 text-white text-center text-2xl font-semibold mb-4">
+        عضویت در سایت تیسا
+      </h2>
+      <form onSubmit={formik.handleSubmit} className="p-6">
         <div className="mb-4">
           <label htmlFor="firstName" className="block text-gray-700">
-            First Name
+            نام
           </label>
           <input
             type="text"
             id="firstName"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.firstName ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("firstName")}
@@ -62,12 +82,12 @@ const Signup = () => {
 
         <div className="mb-4">
           <label htmlFor="lastName" className="block text-gray-700">
-            Last Name
+            نام خانوادگی
           </label>
           <input
             type="text"
             id="lastName"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.lastName ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("lastName")}
@@ -81,12 +101,12 @@ const Signup = () => {
 
         <div className="mb-4">
           <label htmlFor="userName" className="block text-gray-700">
-            userName
+            نام کاربری
           </label>
           <input
             type="userName"
             id="userName"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.userName ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("userName")}
@@ -99,12 +119,12 @@ const Signup = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700">
-            Password
+            رمز
           </label>
           <input
             type="password"
             id="password"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.password ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("password")}
@@ -117,12 +137,12 @@ const Signup = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="confirmPassword" className="block text-gray-700">
-            Confirm Password
+            تکرار رمز
           </label>
           <input
             type="password"
             id="confirmPassword"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.confirmPassword
                 ? "border-red-500"
                 : "border-gray-300"
@@ -137,11 +157,11 @@ const Signup = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="address" className="block text-gray-700">
-            Address
+            آدرس
           </label>
           <textarea
             id="address"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full rounded-md shadow-md bg-slate-100 ${
               formik.errors.address ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("address")}
@@ -153,12 +173,12 @@ const Signup = () => {
 
         <div className="mb-4">
           <label htmlFor="phoneNumber" className="block text-gray-700">
-            Phone Number
+            شماره تلفن
           </label>
           <input
             type="text"
             id="phoneNumber"
-            className={`form-input mt-1 w-full ${
+            className={`form-input mt-1 w-full h-10 rounded-md shadow-md bg-slate-100 ${
               formik.errors.phoneNumber ? "border-red-500" : "border-gray-300"
             }`}
             {...formik.getFieldProps("phoneNumber")}
@@ -172,10 +192,10 @@ const Signup = () => {
         <div className="mt-6">
           <button
             type="submit"
-            className="px-4 py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600"
+            className="w-full text-center px-4 py-2 text-white bg-green-800 rounded-md hover:bg-green-950"
             disabled={!formik.isValid}
           >
-            Submit
+            عضویت و ورود
           </button>
         </div>
       </form>

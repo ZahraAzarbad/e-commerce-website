@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { Navigate, useLocation } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, path = "/login" }) => {
   const accessToken = Cookies.get("accessToken");
 
   const location = useLocation().pathname;
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
   return accessToken ? (
     children
   ) : (
-    <Navigate to={"/login"} state={{ from: location }} replace />
+    <Navigate to={path} state={{ from: location }} replace />
   );
 };
 

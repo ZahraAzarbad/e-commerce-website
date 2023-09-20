@@ -41,7 +41,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  // console.log(editingProduct);
+
   const modalStyle = {
     width: "full",
     display: "flex",
@@ -56,7 +56,6 @@ const EditModal = ({ open, onClose, editingProduct }) => {
 
   useEffect(() => {
     if (editingProduct) {
-      // setSelectedCategory(editingProduct.category);
       setName(editingProduct.name);
       setSelectedCategory(
         cartCategories.data.categories.find(
@@ -69,10 +68,10 @@ const EditModal = ({ open, onClose, editingProduct }) => {
       setBrand(editingProduct.brand);
       setDescription(editingProduct.description);
       setCategory(cartCategories.data.categories);
-      console.log(editingProduct);
+      // console.log(editingProduct);
       handleMedias(editingProduct.images).then((res) => {
         setImageFile(res);
-        console.log(res);
+        // console.log(res);
       });
     }
   }, [editingProduct]);
@@ -103,29 +102,16 @@ const EditModal = ({ open, onClose, editingProduct }) => {
     });
     onClose();
   };
-  console.log(imageFile);
+  // console.log(imageFile);
   const handleDescriptionChange = (data) => {
     setDescription(data);
   };
-  // useEffect(() => {
-  //   publicAxios.get("/categories").then((res) => {
-  //     setCategory(res.data.data.categories);
-  //     const myCategory = res.data.data.categories.filter((item) => {
-  //       return item._id === editingProduct.category;
-  //     });
-  //     console.log(myCategory);
-  //     setSelectedCategory(myCategory);
-  //   });
-  //   privateAxios.get("/subcategories").then((response) => {
-  //     setSubCategory(response.data.data.subcategories);
-  //   });
-  // }, []);
 
   function handleImageChange(e) {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     setImageFile([e.target.files[0]]);
   }
-  console.log(selectedCategory);
+  // console.log(selectedCategory);
   return (
     <CacheProvider value={cacheRtl}>
       <div dir="rtl">
@@ -187,7 +173,7 @@ const EditModal = ({ open, onClose, editingProduct }) => {
                 className="font-secondary"
                 onChange={(e) => {
                   setSelectedSubcategory(e.target.value);
-                  console.log(e.target.value);
+                  // console.log(e.target.value);
                 }}
               >
                 {subcategory

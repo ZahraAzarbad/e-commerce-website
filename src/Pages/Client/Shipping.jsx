@@ -2,30 +2,38 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("نام باید وارد شود"),
   lastName: Yup.string().required("نام خانوادگی باید وارد شود"),
   address: Yup.string().required("آدرس باید وارد شود"),
   phoneNumber: Yup.string()
-    .matches(/^\d{10}$/, "شماره نامعتبر است")
+    .matches(/^\d{11}$/, "شماره نامعتبر است")
     .required("شماره تلفن باید وارد شود"),
   date: Yup.date().required("تاریخ دریافت سفارش باید وارد شود"),
 });
 
 const Shipping = () => {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  console.log(user);
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      address: "",
-      phoneNumber: "",
+      firstName: user.name,
+      lastName: user.lastName,
+      address: user.address,
+      phoneNumber: user.phoneNumber,
       date: "",
     },
+
     validationSchema,
+
     onSubmit: (values) => {
       console.log(values);
+      localStorage.setItem("deliveryDate", values.date);
+      navigate("/paypal");
     },
   });
 
@@ -130,15 +138,12 @@ const Shipping = () => {
         </div>
 
         <div className="my-6 flex justify-start">
-          <Link to="/paypal">
-            <button
-              type="submit"
-              className="px-10 py-2 text-white bg-red-700 rounded-md hover:bg-green-800  cursor-pointer text-center"
-              disabled={!formik.isValid}
-            >
-              پرداخت
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="px-10 py-2 text-white bg-red-700 rounded-md hover:bg-green-800  cursor-pointer text-center"
+          >
+            پرداخت
+          </button>
         </div>
       </form>
     </div>

@@ -5,7 +5,7 @@ function ProductsPreview({ categories, products, categoryId, name, icon }) {
   const filteredProducts = products.data.products.filter(
     (item) => item.category === categoryId
   );
-  console.log(products);
+
   const lastSixProducts = filteredProducts.slice(
     Math.max(filteredProducts.length - 6, 0)
   );
